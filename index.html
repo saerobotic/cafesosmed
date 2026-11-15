@@ -1,82 +1,913 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cafe Sosmed — segera hadir.">
-  <title>Cafe Sosmed — Segera Hadir</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      color: #3b2a20;
-      background: #f6efe6;
-    }
+<script>
+/* =====================================================================
+   ★★★  DATA DUMMY — GANTI DI SINI SAJA  ★★★
+   ---------------------------------------------------------------------
+   Semua alamat, nomor, email, dan akun sosmed di website diambil dari
+   kotak ini. Cukup ubah teks di antara tanda kutip "...", simpan file,
+   lalu muat ulang halaman. Jangan hapus tanda kutip dan koma.
+   ===================================================================== */
+const DATA = {
+  status:     "Segera Dibuka",                 // label di bagian atas. Contoh lain: "Grand Opening 1 Januari 2027" atau "Sudah Buka"
+  jamBuka:    "Setiap hari, 07.00 – 24.00 WIB",
 
-    main {
-      max-width: 520px;
-      text-align: center;
-    }
+  alamatJalan: "Jl. Contoh Raya No. 123",
+  alamatKota:  "Kota Contoh",
+  kodePos:     "12345",
+  negara:      "Indonesia",
 
-    .cup {
-      font-size: 56px;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
+  telepon:   "(021) 1234-5678",
+  whatsapp:  "0812-3456-7890",                 // tulis seperti biasa, boleh pakai 0 di depan
+  email:     "halo@cafesosmed.com",
 
-    h1 {
-      font-size: clamp(2rem, 7vw, 3.25rem);
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
+  instagram: { nama: "@cafesosmed", link: "https://instagram.com/cafesosmed" },
+  tiktok:    { nama: "@cafesosmed", link: "https://www.tiktok.com/@cafesosmed" },
+  facebook:  { nama: "@cafesosmed", link: "https://facebook.com/cafesosmed" },
+  youtube:   { nama: "@cafesosmed", link: "https://youtube.com/@cafesosmed" },
 
-    h1 span {
-      color: #b5651d;
-    }
+  // Peta: kosongkan "" untuk menampilkan kotak "Peta lokasi menyusul".
+  // Nanti isi dengan link "Sematkan peta" dari Google Maps (yang diawali https://www.google.com/maps/embed?...)
+  petaEmbed: ""
+};
+/* =================== AKHIR DATA DUMMY =================== */
+</script>
 
-    p {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: #6b5648;
-    }
+<title>Cafe Sosmed — Eat, Drink, Sport, Style &amp; Party</title>
+<meta name="description" content="Cafe Sosmed: tempat nongkrong anak muda yang menggabungkan kafe, lapangan basket 3x3, gaming, nobar, komunitas, merchandise, dan ruang privat. Harga ramah kantong, mulai Rp10.000.">
+<link rel="canonical" href="https://cafesosmed.com/">
+<meta name="theme-color" content="#0b0b0e">
 
-    .badge {
-      display: inline-block;
-      margin-top: 28px;
-      padding: 10px 22px;
-      border-radius: 999px;
-      background: #3b2a20;
-      color: #f6efe6;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cafe Sosmed">
+<meta property="og:locale" content="id_ID">
+<meta property="og:url" content="https://cafesosmed.com/">
+<meta property="og:title" content="Cafe Sosmed — One Place, Many Experiences">
+<meta property="og:description" content="Kafe, basket 3x3, gaming, nobar, komunitas, dan ruang privat dalam satu tempat. Harga ramah kantong.">
+<meta property="og:image" content="https://cafesosmed.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cafe Sosmed — One Place, Many Experiences">
+<meta name="twitter:description" content="Kafe, basket 3x3, gaming, nobar, komunitas, dan ruang privat dalam satu tempat.">
+<meta name="twitter:image" content="https://cafesosmed.com/assets/og-image.jpg">
 
-    footer {
-      margin-top: 40px;
-      font-size: 0.85rem;
-      color: #9a8676;
-    }
-  </style>
+<link rel="icon" href="assets/favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0b0b0e; --bg-2:#121218; --card:#17171f; --line:#2a2a35;
+  --text:#f4f4f6; --muted:#b4b4c2; --dim:#8a8a9a;
+  --red:#e3262f; --red-hi:#ff4a52; --blue:#1f6fe5; --blue-hi:#4aa8ff;
+  --wa:#25d366;
+  --display:"Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --body:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:14px; --gutter:16px; --max:1180px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.05}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+svg.i{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--red);color:#fff;padding:10px 16px;border-radius:8px;font-weight:800;text-decoration:none}
+.skip:focus{top:12px}
+:focus-visible{outline:3px solid var(--blue-hi);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+section{position:relative}
+.sec{padding:72px 0}
+.alt{background:var(--bg-2)}
+
+/* ---------- label & judul bagian ---------- */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--red-hi)}
+.eyebrow::before{content:"";width:28px;height:4px;background:var(--red);border-radius:2px}
+.eyebrow.blue{color:var(--blue-hi)}
+.eyebrow.blue::before{background:var(--blue)}
+.h2{font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,9vw,4.6rem);text-transform:uppercase;letter-spacing:.01em;margin:14px 0 16px}
+.h2 .r{color:var(--red-hi)} .h2 .b{color:var(--blue-hi)}
+.lead{color:var(--muted);font-size:1.05rem;max-width:62ch}
+.tape{height:10px;background:repeating-linear-gradient(-45deg,var(--red) 0 14px,var(--bg) 14px 28px)}
+.tape.blue{background:repeating-linear-gradient(-45deg,var(--blue) 0 14px,var(--bg) 14px 28px)}
+
+/* ---------- tombol ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:999px;font-weight:800;font-size:1rem;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:inherit;transition:transform .15s,background .15s,border-color .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-hi)}
+.btn-ghost{border-color:#fff;color:#fff;background:transparent}
+.btn-ghost:hover{background:#fff;color:var(--bg)}
+.btn-wa{background:var(--wa);color:#06290f}
+.btn svg.i{width:20px;height:20px}
+
+/* ---------- header ---------- */
+.hdr{position:fixed;inset:0 0 auto 0;z-index:100;transition:background .25s,box-shadow .25s}
+.hdr.solid{background:rgba(11,11,14,.94);box-shadow:0 1px 0 var(--line);backdrop-filter:blur(8px)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.hdr-logo img{height:40px;width:auto}
+.nav{display:none}
+.nav a{text-decoration:none;font-weight:600;font-size:.92rem;color:var(--muted);padding:8px 2px}
+.nav a:hover{color:#fff}
+.hdr .btn{min-height:42px;padding:0 18px;font-size:.9rem}
+.hdr-cta{display:none}
+.burger{width:48px;height:48px;display:grid;place-items:center;background:transparent;border:2px solid var(--line);border-radius:12px;color:#fff;cursor:pointer}
+.burger span,.burger span::before,.burger span::after{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;position:relative;transition:transform .2s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0}
+.burger span::before{top:-6px} .burger span::after{top:6px}
+.burger[aria-expanded="true"] span{background:transparent}
+.burger[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg)}
+.mnav{position:fixed;inset:64px 0 0 0;background:var(--bg);z-index:99;padding:20px var(--gutter) 40px;overflow-y:auto;display:none}
+.mnav.open{display:block}
+.mnav a{display:flex;justify-content:space-between;align-items:center;padding:16px 4px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:1.7rem;text-transform:uppercase;text-decoration:none;letter-spacing:.02em}
+.mnav a:hover{color:var(--red-hi)}
+.mnav .btn{width:100%;margin-top:24px;font-family:var(--body);font-size:1rem;text-transform:none;border:none}
+@media (min-width:1100px){
+  .nav{display:flex;gap:20px}
+  .hdr-cta{display:inline-flex}
+  .burger,.mnav{display:none!important}
+}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:96px;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:saturate(.8)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(60% 50% at 0% 100%,rgba(227,38,47,.45),transparent 70%),
+  radial-gradient(50% 45% at 100% 10%,rgba(31,111,229,.4),transparent 70%),
+  linear-gradient(180deg,rgba(11,11,14,.7) 0%,rgba(11,11,14,.82) 45%,var(--bg) 100%)}
+.hero-in{padding-bottom:48px}
+.status{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:8px 16px 8px 12px;border-radius:999px;font-weight:800;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--red-hi);box-shadow:0 0 0 0 rgba(255,74,82,.7);animation:ping 1.8s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(255,74,82,0)}100%{box-shadow:0 0 0 0 rgba(255,74,82,0)}}
+.hero h1{margin:22px 0 8px}
+.hero h1 img{width:min(560px,92%);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,.6))}
+.tagline{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(2.1rem,9.5vw,5.4rem);line-height:.98;letter-spacing:.01em;margin-top:6px}
+.tagline .r{color:var(--red-hi)} .tagline .b{color:var(--blue-hi)}
+.sub{font-size:clamp(1.05rem,3.6vw,1.35rem);color:var(--muted);margin-top:14px;font-weight:600}
+.pos{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}
+.pos li{font-size:.85rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:8px 14px;border-radius:8px;background:rgba(11,11,14,.6);border:1px solid var(--line)}
+.pos li:nth-child(1){border-color:var(--red)} .pos li:nth-child(3){border-color:var(--blue)}
+.cta{display:flex;flex-direction:column;gap:12px}
+@media (min-width:560px){.cta{flex-direction:row;flex-wrap:wrap}}
+.ticker{background:var(--red);overflow:hidden;white-space:nowrap;border-block:3px solid #000}
+.ticker div{display:inline-block;padding:12px 0;font-family:var(--display);font-size:1.35rem;text-transform:uppercase;letter-spacing:.06em;animation:slide 30s linear infinite}
+.ticker span{margin:0 18px}
+.ticker b{color:#000;font-weight:400}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ---------- tentang ---------- */
+.about{display:grid;gap:36px}
+.about-photo{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.about-photo::after{content:"";position:absolute;inset:auto 0 0 0;height:8px;background:linear-gradient(90deg,var(--red) 50%,var(--blue) 50%)}
+.six{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:40px}
+.six li{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 16px;display:flex;flex-direction:column;gap:12px}
+.six .ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:rgba(227,38,47,.14);color:var(--red-hi)}
+.six li:nth-child(even) .ic{background:rgba(31,111,229,.16);color:var(--blue-hi)}
+.six b{font-size:1.05rem}
+.six small{color:var(--dim);font-size:.85rem;line-height:1.45}
+@media (min-width:720px){.six{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:900px){.about{grid-template-columns:1.1fr 1fr;align-items:center}}
+@media (min-width:1100px){.six{grid-template-columns:repeat(6,1fr)}}
+
+/* ---------- area ---------- */
+.areas{display:grid;gap:18px;margin-top:36px}
+.area{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.area-ph{position:relative;aspect-ratio:16/10;overflow:hidden;background:#222}
+.area-ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.area:hover .area-ph img{transform:scale(1.05)}
+.letter{position:absolute;left:14px;top:14px;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--red);font-family:var(--display);font-size:1.6rem;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.area:nth-child(even) .letter{background:var(--blue)}
+.area-body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.area h3{font-family:var(--display);font-weight:400;font-size:1.65rem;text-transform:uppercase;letter-spacing:.02em}
+.area p{color:var(--muted);font-size:.96rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tags li{font-size:.78rem;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--line);color:var(--text)}
+@media (min-width:640px){.areas{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.areas{grid-template-columns:repeat(3,1fr)}}
+
+.court{margin-top:28px;border-radius:var(--r);overflow:hidden;display:grid;background:#0e1a33;border:1px solid #23365e}
+.court-ph{position:relative;min-height:260px}
+.court-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.court-body{position:relative;padding:28px 22px 30px;overflow:hidden}
+.court-body::before{content:"";position:absolute;right:-90px;bottom:-90px;width:260px;height:260px;border:3px solid rgba(255,255,255,.08);border-radius:50%}
+.court-body::after{content:"";position:absolute;right:-30px;bottom:-30px;width:140px;height:140px;border:3px solid rgba(255,255,255,.08);border-radius:50%}
+.court h3{font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,10vw,4rem);text-transform:uppercase;margin:12px 0}
+.court h3 span{color:var(--red-hi)}
+.checks{display:grid;gap:10px;margin-top:16px;position:relative;z-index:1}
+.checks li{display:flex;gap:12px;align-items:flex-start}
+.checks svg.i{color:var(--blue-hi);margin-top:2px}
+@media (min-width:900px){.court{grid-template-columns:1fr 1fr}.court-body{padding:44px 40px}}
+
+/* ---------- menu ---------- */
+.menu-grid{display:grid;gap:18px;margin-top:36px}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;position:relative;overflow:hidden}
+.mcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--red)}
+.mcard.drink::before{background:var(--blue)}
+.mcard h3{font-size:.85rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.price{font-family:var(--display);font-weight:400;font-size:clamp(2.6rem,11vw,4.2rem);line-height:1;margin:10px 0 4px;color:var(--red-hi)}
+.drink .price{color:var(--blue-hi)}
+.price small{font-family:var(--body);font-weight:800;font-size:.3em;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 8px 0 4px;vertical-align:middle}
+.price-note{color:var(--dim);font-size:.9rem;margin-bottom:18px}
+.items{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.items li{padding:10px 0;border-bottom:1px dashed var(--line);font-weight:600;font-size:.97rem}
+.food-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.food-strip figure{margin:0;border-radius:12px;overflow:hidden;aspect-ratio:1}
+.food-strip img{width:100%;height:100%;object-fit:cover}
+.grab{display:flex;gap:16px;align-items:center;margin-top:18px;padding:20px;border-radius:var(--r);border:2px dashed var(--blue);background:rgba(31,111,229,.08)}
+.grab .ic{width:54px;height:54px;border-radius:14px;background:var(--blue);display:grid;place-items:center;flex:none;color:#fff}
+.grab b{display:block;font-size:1.1rem}
+.grab p{color:var(--muted);font-size:.95rem}
+.menu-foot{margin-top:14px;color:var(--dim);font-size:.88rem}
+@media (min-width:800px){.menu-grid{grid-template-columns:1fr 1fr}.food-strip{grid-template-columns:repeat(4,1fr)}}
+
+/* ---------- ruang privat ---------- */
+.priv{display:grid;gap:28px;margin-top:36px}
+.tiers{display:grid;gap:10px;margin:8px 0 18px}
+.tier{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.tier .ppl{font-family:var(--display);font-size:1.6rem;font-weight:400}
+.tier .ppl small{font-family:var(--body);font-size:.85rem;color:var(--dim);margin-left:6px;font-weight:600}
+.tier .amt{font-family:var(--display);font-size:1.6rem;color:var(--red-hi);font-weight:400}
+.tier-head{display:flex;justify-content:space-between;font-size:.75rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:0 4px}
+.note{display:inline-block;margin-top:14px;font-size:.82rem;color:var(--dim);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+.form{background:#fff;color:#121218;border-radius:var(--r);padding:26px 20px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.form h3{font-family:var(--display);font-weight:400;font-size:2rem;text-transform:uppercase}
+.form .lede{color:#555566;font-size:.94rem;margin:6px 0 18px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-weight:800;font-size:.9rem}
+.field input,.field select,.field textarea{font:inherit;font-size:16px;padding:13px 14px;border-radius:10px;border:2px solid #d5d5de;background:#fafafc;color:#121218;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(31,111,229,.2)}
+.field textarea{min-height:84px;resize:vertical}
+.row2{display:grid;gap:0 12px}
+@media (min-width:480px){.row2{grid-template-columns:1fr 1fr}}
+.form .btn{width:100%;margin-top:6px}
+.form-msg{margin-top:12px;font-size:.88rem;color:#3a3a48;min-height:1.3em}
+@media (min-width:960px){.priv{grid-template-columns:1fr 1fr;align-items:start}.form{padding:32px 30px}}
+
+/* ---------- jadwal ---------- */
+.times{display:grid;gap:16px;margin-top:36px}
+.time{position:relative;padding:26px 22px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden}
+.time .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.time .ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(227,38,47,.15);color:var(--red-hi)}
+.time:nth-child(2) .ic{background:rgba(255,190,60,.15);color:#ffc65a}
+.time:nth-child(3) .ic{background:rgba(31,111,229,.18);color:var(--blue-hi)}
+.time .hr{font-family:var(--display);font-size:1.5rem;letter-spacing:.03em}
+.time h3{font-family:var(--display);font-weight:400;font-size:2rem;text-transform:uppercase}
+.time h4{font-size:1rem;margin:4px 0 8px;color:var(--text)}
+.time p{color:var(--muted);font-size:.95rem}
+.open-hours{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:22px;color:var(--muted);font-weight:600}
+.open-hours svg.i{color:var(--red-hi)}
+@media (min-width:860px){.times{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- komunitas ---------- */
+.comm{overflow:hidden;isolation:isolate}
+.comm-bg{position:absolute;inset:0;z-index:-2}
+.comm-bg img{width:100%;height:100%;object-fit:cover}
+.comm::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,11,14,.93),rgba(11,11,14,.88) 50%,rgba(11,11,14,.96))}
+.events{display:grid;gap:14px;margin-top:36px}
+.event{padding:24px 20px;border-radius:var(--r);background:rgba(23,23,31,.82);border:1px solid var(--line);backdrop-filter:blur(4px)}
+.event .ic{color:var(--red-hi);margin-bottom:14px}
+.event:nth-child(even) .ic{color:var(--blue-hi)}
+.event .ic svg.i{width:34px;height:34px}
+.event h3{font-size:1.2rem;margin-bottom:8px}
+.event p{color:var(--muted);font-size:.95rem}
+.comm-cta{display:flex;flex-direction:column;gap:14px;margin-top:28px;padding:24px 22px;border-radius:var(--r);background:var(--red);align-items:flex-start}
+.comm-cta b{font-family:var(--display);font-size:1.8rem;font-weight:400;text-transform:uppercase;line-height:1.1}
+.comm-cta .btn{background:#fff;color:var(--bg)}
+@media (min-width:640px){.events{grid-template-columns:1fr 1fr}}
+@media (min-width:1000px){.events{grid-template-columns:repeat(4,1fr)}.comm-cta{flex-direction:row;justify-content:space-between;align-items:center;padding:26px 32px}}
+
+/* ---------- merch ---------- */
+.merch{display:grid;gap:28px;align-items:center}
+.merch-ph{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;max-height:560px}
+.merch-ph img{width:100%;height:100%;object-fit:cover}
+.merch-ph .stamp{position:absolute;right:14px;bottom:14px;background:var(--bg);border:2px solid #fff;padding:8px 14px;border-radius:8px;font-family:var(--display);font-size:1.1rem;text-transform:uppercase;letter-spacing:.06em;transform:rotate(-4deg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chips li{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600}
+.chips li:nth-child(3n+1){border-color:rgba(227,38,47,.6)}
+.chips li:nth-child(3n+2){border-color:rgba(31,111,229,.6)}
+.where{display:flex;gap:10px;align-items:center;margin-top:22px;color:var(--muted);font-weight:600}
+.where svg.i{color:var(--red-hi)}
+@media (min-width:860px){.merch{grid-template-columns:.9fr 1.1fr}}
+
+/* ---------- info praktis ---------- */
+.infos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
+.info{padding:20px 16px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.info .ic{color:var(--blue-hi);margin-bottom:12px}
+.info:nth-child(odd) .ic{color:var(--red-hi)}
+.info b{display:block;font-size:1.02rem;margin-bottom:4px}
+.info span{color:var(--muted);font-size:.9rem;line-height:1.45;display:block}
+@media (min-width:900px){.infos{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- kontak ---------- */
+.contact{display:grid;gap:22px;margin-top:32px}
+.clist{display:grid;gap:10px}
+.clist>a,.clist>div:not(.socials){display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--line);text-decoration:none}
+.clist>a:hover{border-color:var(--blue)}
+.clist .ic{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(31,111,229,.16);color:var(--blue-hi);flex:none}
+.clist small{display:block;color:var(--dim);font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.clist p>span{font-weight:600;word-break:break-word}
+.socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.socials a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:.92rem;min-height:44px}
+.socials a:hover{border-color:var(--red);color:#fff}
+.map{border-radius:var(--r);overflow:hidden;min-height:300px;border:2px dashed #3a3a48;background:
+  linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px) 0 0/28px 28px,
+  linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) 0 0/28px 28px,var(--bg-2);
+  display:grid;place-items:center;text-align:center;color:var(--muted);padding:24px}
+.map svg.i{width:44px;height:44px;color:var(--red-hi);margin:0 auto 10px;display:block}
+.map b{display:block;font-family:var(--display);font-weight:400;font-size:1.6rem;text-transform:uppercase;color:var(--text)}
+.map iframe{width:100%;height:100%;min-height:340px;border:0;display:block}
+.map.has-map{padding:0;border-style:solid;display:block}
+@media (min-width:900px){.contact{grid-template-columns:1fr 1.1fr}}
+
+/* ---------- footer ---------- */
+.ftr{background:#000;padding:48px 0 110px;border-top:1px solid var(--line)}
+.ftr-grid{display:grid;gap:28px}
+.ftr img{height:58px;width:auto}
+.ftr .tg{color:var(--text);font-family:var(--display);font-size:1.3rem;text-transform:uppercase;letter-spacing:.03em;margin-top:14px}
+.ftr p{color:var(--dim);font-size:.9rem}
+.ftr h4{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.ftr nav ul{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}
+.ftr nav a{text-decoration:none;color:var(--muted)}
+.ftr nav a:hover{color:#fff}
+.copy{margin-top:34px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:.85rem}
+@media (min-width:860px){.ftr-grid{grid-template-columns:1.3fr 1fr 1fr}.ftr{padding-bottom:48px}}
+
+/* ---------- WA melayang ---------- */
+.wa-float{position:fixed;right:16px;bottom:16px;z-index:90;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.45);text-decoration:none;transition:transform .15s}
+.wa-float:hover{transform:scale(1.07)}
+.wa-float svg{width:32px;height:32px}
+
+/* ---------- animasi muncul ---------- */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1;transform:none}
+}
+@media (min-width:768px){:root{--gutter:28px}.sec{padding:100px 0}}
+</style>
 </head>
 <body>
-  <main>
-    <div class="cup" aria-hidden="true">☕</div>
-    <h1>Cafe <span>Sosmed</span></h1>
-    <p>Website kami sedang diseduh. Sebentar lagi siap disajikan.</p>
-    <div class="badge">Segera Hadir</div>
-    <footer>&copy; 2026 cafesosmed.com</footer>
-  </main>
+<script>if (typeof DATA !== 'undefined') document.documentElement.classList.add('js');</script>
+
+<!-- ikon (dipakai ulang di seluruh halaman) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 9h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 2.5v3M12 2.5v3M4 21h12"/></symbol>
+  <symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3.4 3.4 3.4 9.4 0 12.8M18.4 5.6c-3.4 3.4-3.4 9.4 0 12.8"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.5c2.5.2 4.3 1.9 5 5"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3 3 6l2 5 3-1.5V21h8V9.5l3 1.5 2-5-5-3a4 4 0 0 1-8 0z"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17M3 21h18M14.5 12.5v.01"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19.5v.01"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v5"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 17v-4l2.2-5.2A2 2 0 0 1 7 6.5h10a2 2 0 0 1 1.8 1.3L21 13v4h-2.5M5.5 17H3M3 13h18M8.5 17h7"/><circle cx="7" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20.5h.01M17.5 20.5H21v-3"/></symbol>
+  <symbol id="i-atm" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-fridge" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M8.5 5.5v2M8.5 13v3"/></symbol>
+  <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M12 2v4M4.2 8.2l1.4 1.4M19.8 8.2l-1.4 1.4M2 17h20M6 17a6 6 0 0 1 12 0M7 21h10"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 16v5M7 3h10v6a5 5 0 0 1-10 0V3zM7 5H4a3 3 0 0 0 3 4.5M17 5h3a3 3 0 0 1-3 4.5"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="13" rx="2"/><path d="M8 21h8M12 18v3"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 10.5v3a1 1 0 0 0 1 1h2l6 4.5V5L6 9.5H4a1 1 0 0 0-1 1zM16 8.5a5 5 0 0 1 0 7M19 5.5a9 9 0 0 1 0 13"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8zM9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.5 2.8 2.3 4.6 5 5"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8.5a.5.5 0 0 1 .5-.5z"/></symbol>
+  <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.5 20.5 4.8 16A8.5 8.5 0 1 1 8 19.3z"/><path d="M9 8.5c0 3.6 2.9 6.5 6.5 6.5l1-1.7-2-1-1 .9a5 5 0 0 1-2.2-2.2l.9-1-1-2z"/></symbol>
+</svg>
+
+<a class="skip" href="#utama">Langsung ke isi</a>
+
+<!-- ================= HEADER ================= -->
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a href="#beranda" class="hdr-logo" aria-label="Cafe Sosmed, kembali ke atas"><img src="assets/logo.webp" alt="Cafe Sosmed" width="720" height="264"></a>
+    <nav class="nav" aria-label="Menu utama">
+      <a href="#tentang">Tentang</a>
+      <a href="#area">Area</a>
+      <a href="#menu">Menu</a>
+      <a href="#ruang-privat">Ruang Privat</a>
+      <a href="#jadwal">Jadwal</a>
+      <a href="#komunitas">Komunitas</a>
+      <a href="#merchandise">Merchandise</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <a href="#ruang-privat" class="btn btn-red hdr-cta">Reservasi</a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Buka menu"><span></span></button>
+  </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="Menu utama (HP)">
+  <a href="#tentang">Tentang <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#area">Area &amp; Fasilitas <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#menu">Menu <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#ruang-privat">Ruang Privat <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#jadwal">Jam &amp; Suasana <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#komunitas">Komunitas &amp; Event <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#merchandise">Merchandise <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#kontak">Lokasi &amp; Kontak <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a href="#" class="btn btn-wa" data-wa="Halo Cafe Sosmed, saya mau tanya-tanya dulu."><svg class="i"><use href="#i-wa"/></svg> Chat WhatsApp</a>
+</nav>
+
+<main id="utama">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="beranda">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=55"
+         srcset="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=55 700w,
+                 https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=55 1200w,
+                 https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=50 1800w"
+         sizes="100vw" alt="" fetchpriority="high" width="1800" height="1200">
+  </div>
+  <div class="wrap hero-in">
+    <span class="status"><i aria-hidden="true"></i><span data-isi="status">Segera Dibuka</span></span>
+    <h1><img src="assets/logo.webp" alt="Cafe Sosmed" width="720" height="264"></h1>
+    <p class="tagline">Eat, Drink, <span class="r">Sport</span>,<br>Style &amp; <span class="b">Party</span></p>
+    <p class="sub">One Place, Many Experiences.</p>
+    <ul class="pos" aria-label="Keunggulan kami">
+      <li>Affordable Price</li><li>Comfortable Place</li><li>Connected Lifestyle</li>
+    </ul>
+    <div class="cta">
+      <a href="#menu" class="btn btn-red">Lihat Menu <svg class="i"><use href="#i-arrow"/></svg></a>
+      <a href="#ruang-privat" class="btn btn-ghost">Reservasi Ruang Privat</a>
+    </div>
+  </div>
+  <div class="ticker" aria-hidden="true"><div>
+    <span>Kafe</span><b>●</b><span>Olahraga</span><b>●</b><span>Hiburan</span><b>●</b><span>Komunitas</span><b>●</b><span>Merchandise</span><b>●</b><span>Ruang Privat</span><b>●</b><span>Basket 3x3</span><b>●</b>
+    <span>Kafe</span><b>●</b><span>Olahraga</span><b>●</b><span>Hiburan</span><b>●</b><span>Komunitas</span><b>●</b><span>Merchandise</span><b>●</b><span>Ruang Privat</span><b>●</b><span>Basket 3x3</span><b>●</b>
+  </div></div>
+</section>
+
+<!-- ================= TENTANG ================= -->
+<section class="sec" id="tentang">
+  <div class="wrap">
+    <div class="about">
+      <div class="rv">
+        <span class="eyebrow">Tentang Kami</span>
+        <h2 class="h2">Bukan Sekadar <span class="r">Kafe.</span></h2>
+        <p class="lead">Cafe Sosmed adalah tempat nongkrong buat kamu dan teman-teman. Mau makan, ngopi, main basket, nonton bola bareng, main PlayStation, kumpul komunitas, sampai merayakan ulang tahun, semuanya bisa di satu tempat.</p>
+        <p class="lead" style="margin-top:14px">Suasananya santai, harganya ramah di kantong, dan tempatnya enak buat foto. Pokoknya, <strong style="color:#fff">satu tempat, banyak cerita.</strong></p>
+      </div>
+      <figure class="about-photo rv" style="margin:0">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&h=675&q=60" alt="Sekelompok anak muda duduk berangkulan sambil menikmati suasana" loading="lazy" width="900" height="675">
+      </figure>
+    </div>
+    <ul class="six">
+      <li class="rv"><span class="ic"><svg class="i"><use href="#i-cup"/></svg></span><b>Kafe</b><small>Makanan &amp; minuman harga teman</small></li>
+      <li class="rv"><span class="ic"><svg class="i"><use href="#i-ball"/></svg></span><b>Olahraga</b><small>Lapangan basket 3x3 &amp; nuansa boxing</small></li>
+      <li class="rv"><span class="ic"><svg class="i"><use href="#i-music"/></svg></span><b>Hiburan</b><small>Gaming, nobar, dan musik</small></li>
+      <li class="rv"><span class="ic"><svg class="i"><use href="#i-people"/></svg></span><b>Komunitas</b><small>Rumah buat komunitas anak muda</small></li>
+      <li class="rv"><span class="ic"><svg class="i"><use href="#i-shirt"/></svg></span><b>Merchandise</b><small>Kaos, hoodie, jersey &amp; lainnya</small></li>
+      <li class="rv"><span class="ic"><svg class="i"><use href="#i-door"/></svg></span><b>Ruang Privat</b><small>Untuk acara kamu sendiri</small></li>
+    </ul>
+  </div>
+</section>
+<div class="tape" aria-hidden="true"></div>
+
+<!-- ================= AREA ================= -->
+<section class="sec alt" id="area">
+  <div class="wrap">
+    <span class="eyebrow blue">Area &amp; Fasilitas</span>
+    <h2 class="h2">6 Area, <span class="b">6 Suasana.</span></h2>
+    <p class="lead">Pilih pojok favoritmu. Tiap area punya karakter sendiri, tapi semuanya tetap santai dan nyaman.</p>
+
+    <div class="areas">
+      <article class="area rv">
+        <div class="area-ph"><img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=720&h=450&q=60" alt="Interior kafe bergaya industrial dengan lampu gantung" loading="lazy" width="720" height="450"><span class="letter" aria-hidden="true">A</span></div>
+        <div class="area-body">
+          <h3>Main Cafe Area</h3>
+          <p>Area makan dan minum utama. Tempat paling pas buat ngobrol, belajar, atau kerja sambil ngopi.</p>
+          <ul class="tags"><li>Meja fleksibel</li><li>Suasana santai</li><li>Wi-Fi gratis</li><li>Colokan di meja</li></ul>
+        </div>
+      </article>
+      <article class="area rv">
+        <div class="area-ph"><img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=720&h=450&q=60" alt="Sarung tinju hitam dengan pencahayaan gelap" loading="lazy" width="720" height="450"><span class="letter" aria-hidden="true">B</span></div>
+        <div class="area-body">
+          <h3>Boxing &amp; Street Culture Lounge</h3>
+          <p>Area dengan karakter paling berani: punching bag merah, nuansa streetwear, dan memorabilia olahraga.</p>
+          <ul class="tags"><li>Punching bag</li><li>Streetwear</li><li>Memorabilia olahraga</li></ul>
+        </div>
+      </article>
+      <article class="area rv">
+        <div class="area-ph"><img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=720&h=450&q=60" alt="Ruang gaming dengan TV besar dan lampu ungu" loading="lazy" width="720" height="450"><span class="letter" aria-hidden="true">C</span></div>
+        <div class="area-body">
+          <h3>Movie &amp; Gaming Lounge</h3>
+          <p>Main game atau nonton film bareng teman, di sofa yang empuk.</p>
+          <ul class="tags"><li>TV besar</li><li>PlayStation</li><li>Sofa nyaman</li></ul>
+        </div>
+      </article>
+      <article class="area rv">
+        <div class="area-ph"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=720&h=450&q=60" alt="Bola sepak di atas rumput lapangan" loading="lazy" width="720" height="450"><span class="letter" aria-hidden="true">D</span></div>
+        <div class="area-body">
+          <h3>Big Screen / Nobar Lounge</h3>
+          <p>Nonton pertandingan dan acara seru bareng-bareng di layar besar. Teriak bareng, seru bareng.</p>
+          <ul class="tags"><li>Layar besar</li><li>Nobar pertandingan</li><li>Acara bersama</li></ul>
+        </div>
+      </article>
+      <article class="area rv">
+        <div class="area-ph"><img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=720&h=450&q=60" alt="Deretan piringan hitam dan headphone bergaya retro" loading="lazy" width="720" height="450"><span class="letter" aria-hidden="true">E</span></div>
+        <div class="area-body">
+          <h3>Retro Social Corner</h3>
+          <p>Pojok vintage dengan poster dan memorabilia musik, otomotif, dan budaya populer.</p>
+          <ul class="tags"><li>Dekorasi vintage</li><li>Musik</li><li>Otomotif</li><li>Budaya pop</li></ul>
+        </div>
+      </article>
+      <article class="area rv">
+        <div class="area-ph"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=720&h=450&q=60" alt="Beberapa orang bersulang dengan cangkir kopi" loading="lazy" width="720" height="450"><span class="letter" aria-hidden="true">F</span></div>
+        <div class="area-body">
+          <h3>Private Social &amp; Bar Lounge</h3>
+          <p>Ruang privat yang hangat untuk acaramu sendiri. Partisinya fleksibel, jadi ukuran ruang bisa disesuaikan.</p>
+          <ul class="tags"><li>Gathering</li><li>Ulang tahun</li><li>Meeting</li><li>Arisan</li><li>Acara komunitas</li></ul>
+        </div>
+      </article>
+    </div>
+
+    <div class="court rv">
+      <div class="court-ph"><img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=900&h=700&q=60" alt="Bola basket di lapangan outdoor" loading="lazy" width="900" height="700"></div>
+      <div class="court-body">
+        <span class="eyebrow">Daya Tarik Utama</span>
+        <h3>Lapangan Basket <span>3x3</span></h3>
+        <p class="lead">Bawa tim kamu dan main. Habis keringetan, langsung lanjut nongkrong.</p>
+        <ul class="checks">
+          <li><svg class="i"><use href="#i-check"/></svg>Pertandingan basket 3x3</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Turnamen komunitas</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Latihan dan main santai</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Kegiatan komunitas anak muda</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section class="sec" id="menu">
+  <div class="wrap">
+    <span class="eyebrow">Menu</span>
+    <h2 class="h2">Harga <span class="r">Teman.</span></h2>
+    <p class="lead">Kenyang dan segar tanpa bikin dompet tipis.</p>
+
+    <div class="food-strip">
+      <figure class="rv"><img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=400&h=400&q=60" alt="Sepiring nasi goreng" loading="lazy" width="400" height="400"></figure>
+      <figure class="rv"><img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=400&h=400&q=60" alt="Mi goreng di atas piring kayu" loading="lazy" width="400" height="400"></figure>
+      <figure class="rv"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&h=400&q=60" alt="Kentang goreng dalam keranjang" loading="lazy" width="400" height="400"></figure>
+      <figure class="rv"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=400&h=400&q=60" alt="Segelas kopi susu dingin" loading="lazy" width="400" height="400"></figure>
+    </div>
+
+    <div class="menu-grid">
+      <div class="mcard rv">
+        <h3>Makanan</h3>
+        <p class="price">10–50<small>rb</small></p>
+        <p class="price-note">Rp10.000 – Rp50.000</p>
+        <ul class="items">
+          <li>Nasi Goreng</li><li>Sate</li><li>Spaghetti Wow</li><li>Bakmi Mewah</li><li>Nasi Telur</li>
+          <li>Cireng</li><li>Nugget</li><li>Chicken Wings</li><li>Kentang Goreng</li><li>Martabak Mini</li>
+        </ul>
+      </div>
+      <div class="mcard drink rv">
+        <h3>Minuman</h3>
+        <p class="price"><small>mayoritas</small>15–25<small>rb</small></p>
+        <p class="price-note">Sebagian besar Rp15.000 – Rp25.000</p>
+        <ul class="items">
+          <li>Le Minerale</li><li>Kopi Modern &amp; Sachet</li><li>Kopi Susu Gula Aren</li><li>Jus</li><li>Es Leci Tea</li><li>Minuman Ringan Lainnya</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grab rv">
+      <span class="ic"><svg class="i"><use href="#i-fridge"/></svg></span>
+      <div><b>Grab &amp; Go</b><p>Haus? Ambil sendiri minuman dari kulkas kaca dekat kasir, lalu bayar langsung. Cepat, tanpa antre lama.</p></div>
+    </div>
+    <p class="menu-foot">Daftar menu lengkap dan harga per item akan diumumkan menjelang pembukaan.</p>
+  </div>
+</section>
+<div class="tape blue" aria-hidden="true"></div>
+
+<!-- ================= RUANG PRIVAT ================= -->
+<section class="sec alt" id="ruang-privat">
+  <div class="wrap">
+    <span class="eyebrow">Ruang Privat</span>
+    <h2 class="h2">Acaramu, <span class="r">Ruangmu.</span></h2>
+    <p class="lead">Ulang tahun, gathering, meeting, arisan, atau acara komunitas. <strong style="color:#fff">Tidak ada biaya sewa</strong>, cukup penuhi minimum belanja makanan &amp; minuman.</p>
+
+    <div class="priv">
+      <div class="rv">
+        <div class="tier-head"><span>Kapasitas</span><span>Minimum belanja / ±2 jam</span></div>
+        <div class="tiers">
+          <div class="tier"><span class="ppl">5–6<small>orang</small></span><span class="amt">Rp300.000</span></div>
+          <div class="tier"><span class="ppl">7–10<small>orang</small></span><span class="amt">Rp400.000</span></div>
+          <div class="tier"><span class="ppl">11–15<small>orang</small></span><span class="amt">Rp500.000</span></div>
+        </div>
+        <ul class="checks">
+          <li><svg class="i"><use href="#i-check"/></svg>Tanpa biaya sewa tambahan selama minimum belanja terpenuhi.</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Semua makanan &amp; minuman yang dipesan di ruang privat dihitung sebagai minimum belanja.</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Partisi fleksibel, ukuran ruang menyesuaikan jumlah tamu.</li>
+        </ul>
+        <span class="note">* Harga dapat berubah.</span>
+      </div>
+
+      <form class="form rv" id="formReservasi" novalidate>
+        <h3>Reservasi via WhatsApp</h3>
+        <p class="lede">Isi data di bawah, lalu tekan tombol. WhatsApp akan terbuka dengan pesan yang sudah jadi, tinggal kirim.</p>
+        <div class="field"><label for="f-nama">Nama kamu</label><input id="f-nama" name="nama" type="text" autocomplete="name" required placeholder="Contoh: Rina"></div>
+        <div class="row2">
+          <div class="field"><label for="f-tgl">Tanggal acara</label><input id="f-tgl" name="tanggal" type="date" required></div>
+          <div class="field"><label for="f-jml">Jumlah orang</label>
+            <select id="f-jml" name="jumlah" required>
+              <option value="">Pilih…</option>
+              <option>5–6 orang</option><option>7–10 orang</option><option>11–15 orang</option><option>Lebih dari 15 orang</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="f-kep">Keperluan</label>
+          <select id="f-kep" name="keperluan" required>
+            <option value="">Pilih…</option>
+            <option>Ulang tahun</option><option>Gathering</option><option>Meeting</option><option>Arisan</option><option>Acara komunitas</option><option>Lainnya</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-cat">Catatan <span style="font-weight:400;color:#666">(boleh dikosongkan)</span></label><textarea id="f-cat" name="catatan" placeholder="Contoh: jam mulai, permintaan dekorasi, dll."></textarea></div>
+        <button type="submit" class="btn btn-wa"><svg class="i"><use href="#i-wa"/></svg> Kirim lewat WhatsApp</button>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= JADWAL ================= -->
+<section class="sec" id="jadwal">
+  <div class="wrap">
+    <span class="eyebrow blue">Jam &amp; Suasana</span>
+    <h2 class="h2">Pagi Sampai <span class="b">Malam.</span></h2>
+    <p class="lead">Suasananya berganti mengikuti waktu. Datang kapan saja, selalu ada yang seru.</p>
+    <div class="times">
+      <article class="time rv">
+        <div class="top"><span class="ic"><svg class="i"><use href="#i-sunrise"/></svg></span><span class="hr">07.00–11.00</span></div>
+        <h3>Pagi</h3><h4>Morning Club</h4>
+        <p>Sarapan, ngopi pagi, arisan, dan pertemuan orang tua.</p>
+      </article>
+      <article class="time rv">
+        <div class="top"><span class="ic"><svg class="i"><use href="#i-sun"/></svg></span><span class="hr">12.00–18.00</span></div>
+        <h3>Siang–Sore</h3><h4>Waktunya pelajar &amp; mahasiswa</h4>
+        <p>Kerja kelompok, latihan basket, dan kegiatan komunitas.</p>
+      </article>
+      <article class="time rv">
+        <div class="top"><span class="ic"><svg class="i"><use href="#i-moon"/></svg></span><span class="hr">19.00–24.00</span></div>
+        <h3>Malam</h3><h4>Nobar, gaming &amp; acara</h4>
+        <p>Nonton bareng, main game, gathering, ulang tahun, dan acara privat.</p>
+      </article>
+    </div>
+    <p class="open-hours"><svg class="i"><use href="#i-clock"/></svg>Jam buka: <span data-isi="jamBuka"></span></p>
+  </div>
+</section>
+
+<!-- ================= KOMUNITAS ================= -->
+<section class="sec comm" id="komunitas">
+  <div class="comm-bg"><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1400&q=45" alt="" loading="lazy" width="1400" height="930"></div>
+  <div class="wrap">
+    <span class="eyebrow">Komunitas &amp; Event</span>
+    <h2 class="h2">Ramai <span class="r">Bareng</span> <span class="b">Komunitas.</span></h2>
+    <p class="lead">Cafe Sosmed dibuat untuk berkumpul. Komunitas basket, otomotif, lifestyle, atau sekadar geng tongkrongan, semua punya tempat di sini.</p>
+    <div class="events">
+      <article class="event rv"><div class="ic"><svg class="i"><use href="#i-trophy"/></svg></div><h3>Turnamen Basket 3x3</h3><p>Kompetisi rutin antar tim dan komunitas di lapangan kami.</p></article>
+      <article class="event rv"><div class="ic"><svg class="i"><use href="#i-tv"/></svg></div><h3>Nobar</h3><p>Nonton pertandingan besar ramai-ramai di layar lebar.</p></article>
+      <article class="event rv"><div class="ic"><svg class="i"><use href="#i-people"/></svg></div><h3>Gathering Komunitas</h3><p>Kopdar, rapat, atau temu anggota. Tempatnya siap.</p></article>
+      <article class="event rv"><div class="ic"><svg class="i"><use href="#i-mega"/></svg></div><h3>Kolaborasi &amp; Sponsor</h3><p>Punya ide acara atau brand? Yuk, bikin event bareng.</p></article>
+    </div>
+    <div class="comm-cta rv">
+      <b>Komunitasmu mau bikin acara di sini?</b>
+      <a href="#" class="btn" data-wa="Halo Cafe Sosmed, saya dari komunitas ... dan ingin berdiskusi soal kolaborasi/acara."><svg class="i"><use href="#i-wa"/></svg> Ngobrol via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MERCHANDISE ================= -->
+<section class="sec alt" id="merchandise">
+  <div class="wrap merch">
+    <figure class="merch-ph rv" style="margin:0">
+      <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=720&h=900&q=60" alt="Orang memakai hoodie abu-abu dilihat dari belakang" loading="lazy" width="720" height="900">
+      <span class="stamp">Lantai Dasar</span>
+    </figure>
+    <div class="rv">
+      <span class="eyebrow">Merchandise</span>
+      <h2 class="h2">Sosmed <span class="r">Lifestyle</span> Store.</h2>
+      <p class="lead">Bawa pulang gaya Cafe Sosmed. Toko merchandise kami ada di lantai dasar, siap melengkapi tampilanmu.</p>
+      <ul class="chips">
+        <li>Kaos</li><li>Hoodie</li><li>Topi</li><li>Tumbler</li><li>Mug</li><li>Stiker</li><li>Jersey Basket</li><li>Aksesori Lifestyle</li>
+      </ul>
+      <p class="where"><svg class="i"><use href="#i-store"/></svg>Sosmed Lifestyle &amp; Merchandise Store, lantai dasar</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INFO PRAKTIS ================= -->
+<section class="sec" id="info">
+  <div class="wrap">
+    <span class="eyebrow blue">Info Praktis</span>
+    <h2 class="h2">Biar Makin <span class="b">Nyaman.</span></h2>
+    <div class="infos">
+      <div class="info rv"><div class="ic"><svg class="i"><use href="#i-car"/></svg></div><b>Area Parkir</b><span>Muat 10–15 mobil dan 20–30 motor</span></div>
+      <div class="info rv"><div class="ic"><svg class="i"><use href="#i-qr"/></svg></div><b>Bayar Mudah</b><span>Lewat kasir atau scan QRIS</span></div>
+      <div class="info rv"><div class="ic"><svg class="i"><use href="#i-wifi"/></svg></div><b>Wi-Fi Gratis</b><span>Buat belajar, kerja, dan upload</span></div>
+      <div class="info rv"><div class="ic"><svg class="i"><use href="#i-atm"/></svg></div><b>Ada ATM</b><span>Dekat pintu masuk</span></div>
+      <div class="info rv"><div class="ic"><svg class="i"><use href="#i-plug"/></svg></div><b>Colokan di Meja</b><span>Baterai aman sampai pulang</span></div>
+      <div class="info rv"><div class="ic"><svg class="i"><use href="#i-fridge"/></svg></div><b>Grab &amp; Go</b><span>Ambil minuman sendiri, bayar langsung</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KONTAK ================= -->
+<section class="sec alt" id="kontak">
+  <div class="wrap">
+    <span class="eyebrow">Lokasi &amp; Kontak</span>
+    <h2 class="h2">Sampai <span class="r">Ketemu</span> di Sini.</h2>
+    <div class="contact">
+      <div class="clist rv">
+        <div><span class="ic"><svg class="i"><use href="#i-pin"/></svg></span><p><small>Alamat</small><span data-isi="alamat"></span></p></div>
+        <div><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><p><small>Jam buka</small><span data-isi="jamBuka"></span></p></div>
+        <a href="#" data-link="whatsapp"><span class="ic"><svg class="i"><use href="#i-wa"/></svg></span><p><small>WhatsApp</small><span data-isi="whatsapp"></span></p></a>
+        <a href="#" data-link="telepon"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><p><small>Telepon</small><span data-isi="telepon"></span></p></a>
+        <a href="#" data-link="email"><span class="ic"><svg class="i"><use href="#i-mail"/></svg></span><p><small>Email</small><span data-isi="email"></span></p></a>
+        <div class="socials" aria-label="Media sosial">
+          <a href="#" data-link="instagram" target="_blank" rel="noopener"><svg class="i"><use href="#i-ig"/></svg><span class="sr-only">Instagram </span><span data-isi="instagram"></span></a>
+          <a href="#" data-link="tiktok" target="_blank" rel="noopener"><svg class="i"><use href="#i-tt"/></svg><span class="sr-only">TikTok </span><span data-isi="tiktok"></span></a>
+          <a href="#" data-link="facebook" target="_blank" rel="noopener"><svg class="i"><use href="#i-fb"/></svg><span class="sr-only">Facebook </span><span data-isi="facebook"></span></a>
+          <a href="#" data-link="youtube" target="_blank" rel="noopener"><svg class="i"><use href="#i-yt"/></svg><span class="sr-only">YouTube </span><span data-isi="youtube"></span></a>
+        </div>
+      </div>
+      <div class="map rv" id="peta">
+        <div><svg class="i"><use href="#i-pin"/></svg><b>Peta lokasi menyusul</b><p>Kami sedang menyiapkan petunjuk arah.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div>
+        <img src="assets/logo.webp" alt="Cafe Sosmed" width="720" height="264" loading="lazy">
+        <p class="tg">Eat, Drink, Sport, Style &amp; Party</p>
+        <p>One Place, Many Experiences.</p>
+      </div>
+      <nav aria-label="Tautan bawah">
+        <h4>Jelajahi</h4>
+        <ul>
+          <li><a href="#tentang">Tentang</a></li><li><a href="#area">Area</a></li>
+          <li><a href="#menu">Menu</a></li><li><a href="#ruang-privat">Ruang Privat</a></li>
+          <li><a href="#jadwal">Jadwal</a></li><li><a href="#komunitas">Komunitas</a></li>
+          <li><a href="#merchandise">Merchandise</a></li><li><a href="#kontak">Kontak</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h4>Hubungi</h4>
+        <p data-isi="alamat"></p>
+        <p style="margin-top:8px"><a href="#" data-link="whatsapp" data-isi="whatsapp" style="text-decoration:none"></a> · <a href="#" data-link="email" data-isi="email" style="text-decoration:none"></a></p>
+      </div>
+    </div>
+    <p class="copy">© <span id="thn">2026</span> Cafe Sosmed · cafesosmed.com</p>
+  </div>
+</footer>
+
+<a href="#" class="wa-float" data-wa="Halo Cafe Sosmed, saya mau tanya-tanya dulu." aria-label="Chat WhatsApp Cafe Sosmed">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-wa"/></svg>
+</a>
+
+<script>
+(function(){
+  // animasi muncul saat di-scroll (dipasang paling awal supaya isi tetap tampil walau ada data yang salah ketik)
+  var rv = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function(el){ io.observe(el); });
+  } else { rv.forEach(function(el){ el.classList.add('in'); }); }
+
+  // menu HP
+  var hdr = document.getElementById('hdr'), burger = document.getElementById('burger'), mnav = document.getElementById('mnav');
+  function onScroll(){ hdr.classList.toggle('solid', window.scrollY > 40 || mnav.classList.contains('open')); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  function setMenu(open){
+    mnav.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+    onScroll();
+  }
+  burger.addEventListener('click', function(){ setMenu(!mnav.classList.contains('open')); });
+  mnav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && mnav.classList.contains('open')) { setMenu(false); burger.focus(); } });
+
+  if (typeof DATA === 'undefined') { console.error('Blok DATA DUMMY di atas ada yang salah ketik (cek tanda kutip dan koma).'); return; }
+  var D = DATA;
+  function angka(s){ return String(s).replace(/\D/g,''); }
+  function intl(s){ var d = angka(s); if (d.charAt(0) === '0') d = '62' + d.slice(1); return d; }
+  var waNo = intl(D.whatsapp);
+  function waLink(pesan){ return 'https://wa.me/' + waNo + (pesan ? '?text=' + encodeURIComponent(pesan) : ''); }
+  var alamat = D.alamatJalan + ', ' + D.alamatKota + ', ' + D.negara + ' ' + D.kodePos;
+
+  var isi = {
+    status: D.status, jamBuka: D.jamBuka, alamat: alamat,
+    telepon: D.telepon, whatsapp: D.whatsapp, email: D.email,
+    instagram: D.instagram.nama, tiktok: D.tiktok.nama, facebook: D.facebook.nama, youtube: D.youtube.nama
+  };
+  var link = {
+    whatsapp: waLink(''), telepon: 'tel:+' + intl(D.telepon), email: 'mailto:' + D.email,
+    instagram: D.instagram.link, tiktok: D.tiktok.link, facebook: D.facebook.link, youtube: D.youtube.link
+  };
+  document.querySelectorAll('[data-isi]').forEach(function(el){ var k = el.getAttribute('data-isi'); if (isi[k] != null) el.textContent = isi[k]; });
+  document.querySelectorAll('[data-link]').forEach(function(el){
+    var k = el.getAttribute('data-link'); if (!link[k]) return;
+    el.href = link[k];
+    if (k === 'whatsapp') { el.target = '_blank'; el.rel = 'noopener'; }
+  });
+  document.querySelectorAll('[data-wa]').forEach(function(el){
+    el.href = waLink(el.getAttribute('data-wa')); el.target = '_blank'; el.rel = 'noopener';
+  });
+  document.getElementById('thn').textContent = new Date().getFullYear();
+
+  // peta
+  if (D.petaEmbed) {
+    var p = document.getElementById('peta');
+    p.classList.add('has-map');
+    p.innerHTML = '<iframe title="Peta lokasi Cafe Sosmed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+    p.firstChild.src = D.petaEmbed;
+  }
+
+  // data bisnis untuk Google (diambil dari DATA di atas)
+  var ld = {
+    "@context": "https://schema.org", "@type": "CafeOrCoffeeShop",
+    "name": "Cafe Sosmed", "url": "https://cafesosmed.com/",
+    "logo": "https://cafesosmed.com/assets/apple-touch-icon.png",
+    "image": "https://cafesosmed.com/assets/og-image.jpg",
+    "description": "Tempat nongkrong anak muda: kafe, lapangan basket 3x3, gaming, nobar, komunitas, merchandise, dan ruang privat.",
+    "slogan": "Eat, Drink, Sport, Style & Party",
+    "telephone": "+" + intl(D.telepon), "email": D.email,
+    "priceRange": "Rp10.000 - Rp50.000", "servesCuisine": "Indonesia",
+    "currenciesAccepted": "IDR", "paymentAccepted": "QRIS",
+    "address": { "@type": "PostalAddress", "streetAddress": D.alamatJalan, "addressLocality": D.alamatKota, "postalCode": D.kodePos, "addressCountry": "ID" },
+    "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "07:00", "closes": "23:59" }],
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Wi-Fi gratis", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Lapangan basket 3x3", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Parkir", "value": true }
+    ],
+    "sameAs": [D.instagram.link, D.tiktok.link, D.facebook.link, D.youtube.link]
+  };
+  var s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
+
+  // form reservasi -> WhatsApp
+  var f = document.getElementById('formReservasi'), msg = document.getElementById('formMsg'), tgl = document.getElementById('f-tgl');
+  var now = new Date(); tgl.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var kosong = Array.prototype.filter.call(f.querySelectorAll('[required]'), function(el){ return !el.value.trim(); });
+    if (kosong.length) {
+      msg.style.color = '#c4161f';
+      msg.textContent = 'Mohon lengkapi: ' + kosong.map(function(el){ return f.querySelector('label[for="' + el.id + '"]').childNodes[0].textContent.trim(); }).join(', ') + '.';
+      kosong[0].focus(); return;
+    }
+    var t = tgl.value.split('-'), tanggal = new Date(+t[0], t[1] - 1, +t[2]).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    var pesan = 'Halo Cafe Sosmed, saya mau reservasi Ruang Privat.\n\n' +
+      'Nama: ' + f.nama.value.trim() + '\n' +
+      'Tanggal: ' + tanggal + '\n' +
+      'Jumlah orang: ' + f.jumlah.value + '\n' +
+      'Keperluan: ' + f.keperluan.value + '\n' +
+      (f.catatan.value.trim() ? 'Catatan: ' + f.catatan.value.trim() + '\n' : '') +
+      '\nApakah tanggal tersebut masih tersedia? Terima kasih.';
+    var url = waLink(pesan);
+    msg.style.color = '#1b6e35';
+    msg.textContent = 'Membuka WhatsApp… Kalau tidak terbuka, pastikan WhatsApp terpasang atau izinkan pop-up.';
+    var w = window.open(url, '_blank');
+    if (w) { w.opener = null; } else { location.href = url; }
+  });
+})();
+</script>
 </body>
 </html>
